@@ -1,0 +1,562 @@
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300&display=swap');
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'JetBrains Mono'
+}
+
+:root {
+    --darkMain: #023436;
+    --lighterMain: #023B38;
+    --lighterMain2: #1c6663;
+    --darkText: #03B5AA;
+    --highlight: #4CFAEF;
+    --wrong: rgb(120, 0, 0);
+    --darkMainLighter: #28918d;
+}
+
+.logo {
+    font-weight: 800;
+    font-size: 20px;
+    cursor: pointer;
+    color: var(--darkText);
+    background-size: 200% 100%; 
+    padding: 10px;
+    border-radius: 9px;
+    /* credit: https://stackoverflow.com/questions/41060317/slide-animation-text-color-change */
+    background-image: linear-gradient(to right, var(--darkMain) 50%, var(--highlight) 50%),
+                    linear-gradient(to right, var(--darkText) 50%, var(--lighterMain2) 50%);
+    transition: background-position 0.2s ease-in 0s; 
+    -webkit-background-clip: text, border-box;
+    background-clip: text, border-box; 
+    color: transparent; 
+}
+
+.logo:hover {
+    background-position: -100% 0; ;
+}
+
+.buttonLink button {
+    background-color: black;
+    padding: 10px;
+    border-radius: 20px;
+    border-color: var(--darkText);
+    background-color: var(--darkMain);
+    color: var(--darkText)
+}
+
+.buttonLink button:hover {
+    transition: all 0.4s ease-in 0s;
+    border-color: var(--darkMain);
+    background-color: var(--darkText);
+    color: var(--darkMain)
+}
+
+.buttonLink button:not(:hover) {
+    transition: all 0.4s ease-in 0s;
+    border-color: var(--darkText);
+    background-color: var(--darkMain);
+    color: var(--darkText)
+}
+
+li, a, button {
+    font-weight: 500;
+    text-decoration: none;
+    list-style: none;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 30px 10%;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+.navLinks li {
+    display: inline-block;
+    padding: 0px 20px;
+}
+
+.navLinks li a {
+    transition: all 0.3 ease 0s;
+    color: var(--darkText);
+}
+
+
+.navLinks li a:not(:hover) {
+    transition: all 1s ease 0s;
+    color: var(--darkText);
+}
+
+.navLinks li a:hover {
+    transition: all 1s ease 0s;
+    color: var(--highlight);
+    text-shadow: var(--highlight) 0 0 10px;
+}
+
+body {
+    display: flex;
+    padding: 0 10px;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: var(--darkMain);
+}
+
+.paragraph {
+    color: var(--darkText);
+}
+
+.results {
+    color: var(--darkText);
+}
+
+::selection {
+    color: var(--darkText);
+    background: var(--highlight);
+}
+
+.wrapper {
+    width: 700px;
+    padding: 35px;
+    background: var(--lighterMain);
+    border-radius: 50px;
+    box-shadow: 0 0 10px var(--lighterMain2);
+}
+
+.wrapper .input-field {
+    opacity: 0;
+    z-index: -999;
+    position: absolute;
+}
+
+.wrapper .content-wrapper {
+    padding: 10px 20px 0;
+}
+
+.content-wrapper .typing-text {
+    overflow: hidden;
+    max-height: 256px;
+}
+
+.typing-text::-webkit-scrollbar {
+    width: 0;
+}
+
+.typing-text p {
+    font-size: 21px;
+    text-align: justify;
+    letter-spacing: 1px;
+    word-break: break-all;
+}
+
+.typing-text p span {
+    position: relative;
+}
+
+.typing-text p span.correct {
+    color: var(--highlight);
+}
+
+.typing-text p span.incorrect {
+    color: var(--wrong);
+    border-radius: 4px;
+}
+
+.typing-text p span.active::before {
+    position: absolute;
+    content: "";
+    height: 2px;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    border-radius: 5px;
+    background: white;
+    animation: blink 1s ease-in-out infinite;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 1;
+    }
+}
+
+.content-wrapper .content {
+    margin-top: 16px;
+    display: flex;
+    padding: 12px 0;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 3px solid var(--lighterMain2)
+}
+
+.content button {
+   outline: none;
+   border: none;
+   width: 105px;
+   color: var(--darkText);
+   background-color: var(--darkMain);
+   padding: 10px 0;
+   font-weight: 800;
+   font-size: 13px;
+   cursor: pointer;
+   border-radius: 10px;
+}
+
+.content button:hover {
+    transition: 1s;
+    text-shadow: var(--highlight) 0 0 20px;
+    scale: 110%;
+}
+
+.content button:not(:hover) {
+    transition: 1s;
+    scale: 100%;
+}
+
+.content .results {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    width: calc(100% - 140px);
+    justify-content: space-between;
+}
+
+.results li {
+    display: flex;
+    height: 20px;
+    list-style: none;
+    position: relative;
+    align-items: center;
+}
+
+.results li:not(:first-child){
+    padding-left: 20px;
+    border-left: 2px solid var(--lighterMain2);
+}
+
+.results-details li p {
+    font-size: 13px;
+}
+
+.results-details li span {
+    display: block;
+    font-size: 13px;
+    margin-left: 10px;
+}
+
+li span b {
+    font-weight: 500;
+}
+
+li:not(:first-child) span{
+    font-weight: 500;
+}
+
+@media (max-width: 756px) {
+    .wrapper {
+        padding: 20px 0;
+    }
+    .content-wrapper .content {
+        padding: 20px 0;
+    }
+    .content-wrapper .typing-text {
+        max-height: 100%;
+    }
+    .typing-text p {
+        font-size: 19px;
+        text-align: left;
+    }
+    .content button {
+        width: 100%;
+        font-size: 15px;
+        padding: 10px 0;
+        margin-top: 20px;
+    }
+    .content .results {
+        width: 100%;
+    }
+    .results li:not(:first-child) {
+        border-left: 0;
+        padding: 0;
+    }
+    .results li p,
+    .results li span {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 518px) {
+    .wrapper .content-box {
+        padding: 10px 15px 0;
+    }
+    .typing-text p {
+        font-size: 13px;
+    }
+    .result-details li {
+        margin-bottom: 10px;
+    }
+    .content button {
+        margin-top: 10px;
+    }
+}
+
+/* userpage */
+.wrapperUser {
+    width: 700px;
+    padding: 35px;
+    background: var(--lighterMain);
+    border-radius: 50px;
+    box-shadow: 0 0 10px var(--lighterMain2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 30px;
+}
+
+.wrapperUser .contentWrapperUser {
+    padding: 10px 20px 0;
+}
+
+.wrapperUser img {
+    height: 160px;
+    width: 160px;
+    border-radius: 80px;
+    border: 10px var(--lighterMain2) solid;
+    box-shadow: 0 0 10px var(--lighterMain2);
+    position: relative;
+}
+
+.wrapperUser .userInfo {
+    text-align: center;
+}
+
+.userInfo .userName {
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    color: var(--darkText);
+    font-weight: 800;
+    font-size: 19px;
+}
+
+.userInfo .userDesc {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    color: var(--darkMainLighter);
+    font-weight: 800;
+    font-size: 19px;
+}
+
+.userInfo .testResults {
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    color: var(--darkText);
+    font-weight: 800;
+    font-size: 19px;
+    margin-top: 20px;
+}
+
+.userInfo .last10, .allTime {
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    color: var(--darkText);
+    font-weight: 800;
+    font-size: 19px;
+}
+
+.userInfo .allTime {
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    color: var(--darkText);
+    font-weight: 800;
+    font-size: 19px;
+    padding-bottom: 15px;
+    border-bottom: 3px var(--darkText) solid;
+}
+
+.testResult {
+    margin-top: 10px;
+    color: var(--darkMainLighter);
+    font-weight: 800;
+    font-size: 19px;
+}
+
+/* LOGIN */
+.wrapper h1 {
+    text-align: center;
+    padding: 0 0 5px 0;
+    color: var(--darkText);
+    font-size: 1.45em;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+}
+
+.wrapper h4 {
+    text-align: center;
+    padding: 0 0 20px 0;
+    border-bottom: 3px solid var(--darkText);
+    color: var(--darkText);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+}
+
+.center form {
+    padding: 0 40px;
+    box-sizing: border-box;
+}
+
+form .text-field {
+    position: relative;
+    border-bottom: 2px solid --offwhite;
+    margin: 30px 0;
+}
+
+.text-field input {
+    width: 100%;
+    padding: 0 8px;
+    height: 40px;
+    font-size: 16px;
+    border: none;
+    outline: none;
+    border-radius: 20px;
+}
+
+.text-field label {
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    color: gray;
+    font-size: 16px;
+    transform: translate(10%, -50%);
+    pointer-events: none;
+}
+
+.forgot {
+    margin: -5px 0 20px 5px;
+    color: var(--darkText);
+    cursor: pointer;
+}
+
+.forgot:hover {
+    text-decoration: underline;
+    color: var(--highlight);
+    transition: 0.5s;
+}
+
+input[type="submit"] {
+    width: 100%;
+    height: 50px;
+    border: 4px solid var(--darkMainLighter);
+    border-radius: 30px;
+    background-color: var(--darkText);
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--darkMain);
+    cursor: pointer;
+    outline: none;
+}
+
+input[type="submit"]:hover {
+    border-color: var(--darkText);
+    background-color: var(--darkMainLighter);
+    color: var(--highlight);
+    transition: .5s;
+}
+
+input[type="submit"]:not(:hover) {
+    transition: .5s;
+}
+
+.text-field input:focus ~ label,
+.text-field input:valid ~ label {
+    visibility: hidden;
+}
+
+.signup {
+    margin: 30px 0;
+    text-align: center;
+    font-size: 16px;
+    color: var(--darkText);
+}
+
+.signup a {
+    color: var(--offwhite);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.signup a:hover {
+    text-decoration: underline;
+    color: var(--highlight);
+    transition: .5s;
+}
+
+/* signup */
+.signUpTitle {
+    padding: 0 0 20px 0;
+    border-bottom: 3px solid var(--darkText);
+    color: var(--darkText);
+}
+
+form .text-field-signup {
+    position: relative;
+    margin: 40px 0;
+}
+
+.text-field-signup input {
+    width: 100%;
+    padding: 0 8px;
+    height: 40px;
+    font-size: 16px;
+    border: none;
+    outline: none;
+    border-radius: 20px;
+}
+
+.text-field-signup label {
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    color: var(--darkText);
+    font-size: 16px;
+    font-weight: 500;
+    transform: translate(10%, -220%);
+    pointer-events: none;
+}
+
+.terms-privacy-div {
+    margin: -5px 0 20px 5px;
+    color: var(--darkText);
+    cursor: pointer;
+}
+
+.terms-privacy-div a {
+    color: var(--highlight)
+}
+
+.terms-privacy-div a:hover {
+    text-decoration: underline;
+}
+
+.signup-form {
+    margin-top: 30px;
+}
+
+
+
+
