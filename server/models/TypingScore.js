@@ -20,6 +20,7 @@ const typingScoreSchema = new Schema({
   testDate: {
     type: Date,
     default: Date.now,
+    required: true
   },
 });
 

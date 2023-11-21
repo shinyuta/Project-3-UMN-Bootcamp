@@ -20,10 +20,7 @@ const userSchema = new Schema({
     required: true,
     minlength: 5
   },
-  description: {
-    type: String, 
-    maxLength: 50
-  }
+  
 });
 
 // set up pre-save middleware to create password

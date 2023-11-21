@@ -1,35 +1,16 @@
 const typeDefs = `
-  type Category {
-    _id: ID
-    name: String
-  }
-
-  type Product {
-    _id: ID
-    name: String
-    description: String
-    image: String
-    quantity: Int
-    price: Float
-    category: Category
-  }
-
-  type Order {
-    _id: ID
-    purchaseDate: String
-    products: [Product]
-  }
 
   type User {
-    _id: ID
-    firstName: String
-    lastName: String
-    email: String
-    orders: [Order]
+    _id: ID!
+    userName: String!
+    email: String!
   }
 
-  type Checkout {
-    session: ID
+  type TypingScores {
+    user: User
+    wordsPerMinute: Number!
+    accuracy: Number!
+    testDate: Date!
   }
 
   type Auth {
@@ -37,31 +18,21 @@ const typeDefs = `
     user: User
   }
 
-  input ProductInput {
-    _id: ID
-    purchaseQuantity: Int
-    name: String
-    image: String
-    price: Float
-    quantity: Int
-  }
-
   type Query {
-    categories: [Category]
-    products(category: ID, name: String): [Product]
-    product(_id: ID!): Product
     user: User
-    order(_id: ID!): Order
-    checkout(products: [ProductInput]): Checkout
+    typingScores: TypingScores
   }
 
   type Mutation {
-    addUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
-    addOrder(products: [ID]!): Order
-    updateUser(firstName: String, lastName: String, email: String, password: String): User
-    updateProduct(_id: ID!, quantity: Int!): Product
+    addUser(userName: String!, email: String!, password: String!): Auth
+    addTypingScore(user: User, wordsPerMinute: Number!, accuracy: Number!, testDate: Date!)
+    updateUser(userName: String, email: String, password: String): User
+    updateTypingScore(user: User, wordsPerMinute: Number, accuracy: Number, testDate: Date)
     login(email: String!, password: String!): Auth
+    // deleteUser()
+    // deleteTypingScore()
   }
+  
 `;
 
 module.exports = typeDefs;
