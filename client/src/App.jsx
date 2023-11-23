@@ -6,8 +6,12 @@ import {
   createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
+import './index.css';
 
 import Nav from './components/Nav';
+import TypingTest from './components/typingTest';
+import Login from './pages/Login';
+
 import { StoreProvider } from './utils/GlobalState';
 
 const httpLink = createHttpLink({
@@ -32,11 +36,13 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
+      <Nav />
       <div>
-        <StoreProvider>
-          <Nav />
-          <Outlet />
-        </StoreProvider>
+        
+        {/* <StoreProvider> */}
+        <Outlet />
+
+        {/* </StoreProvider> */}
       </div>
     </ApolloProvider>
   );
