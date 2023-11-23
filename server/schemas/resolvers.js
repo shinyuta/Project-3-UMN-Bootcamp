@@ -1,11 +1,12 @@
 const { User, TypingScore } = require('../models');
 const { signToken, AuthenticationError } = require('../utils/auth');
-const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
+// const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
 
 const resolvers = {
   Query: {
     typingScores: async () => {
-      return await TypingScore.find();  
+      const user = User(username) // how to find single user's scores
+      return await TypingScore.findOne(user._id).sort({testDate: 'desc'}).limit(10)
     }, 
     user: async () => {
       return await User.find().sort({testDate: 'desc'}).limit(10)
@@ -14,11 +15,15 @@ const resolvers = {
 
   Mutation: {
 
-    addUser: async (parent, args) => {
-      const user = await User.create(args);
-      const token = signToken(user);
+  addUser: async (parent, args) => {
+    const user = await User.create(args);
+    const token = signToken(user);
 
-      return { token, user };
+    return { token, user };
+  },
+
+  addTypingScore: async (parent, args) => {
+    
   },
 
   updateUser: async (parent, args, context) => {
