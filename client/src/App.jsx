@@ -8,11 +8,10 @@ import {
 import { setContext } from '@apollo/client/link/context';
 import './index.css';
 
-import Nav from './components/Nav';
-import TypingTest from './components/typingTest';
-import Login from './pages/Login';
+import React from 'react';
+import { useState, useEffect } from 'react';
 
-import { StoreProvider } from './utils/GlobalState';
+import Nav from './components/Nav';
 
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -34,15 +33,12 @@ const client = new ApolloClient({
 });
 
 function App() {
+  
   return (
     <ApolloProvider client={client}>
       <Nav />
       <div>
-        
-        {/* <StoreProvider> */}
         <Outlet />
-
-        {/* </StoreProvider> */}
       </div>
     </ApolloProvider>
   );

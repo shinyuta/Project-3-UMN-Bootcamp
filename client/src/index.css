@@ -137,19 +137,25 @@ body {
     box-shadow: 0 0 10px var(--lighterMain2);
 }
 
+/* changes */
 .wrapper .input-field {
-    opacity: 0;
-    z-index: -999;
+    opacity: .5;
+    z-index: 999;
     position: absolute;
+    border: 2px solid blue;
+    height: 100%;
+    width: 100%;
 }
 
 .wrapper .content-wrapper {
     padding: 10px 20px 0;
 }
 
+/* changes */
 .content-wrapper .typing-text {
     overflow: hidden;
     max-height: 256px;
+    position: relative;
 }
 
 .typing-text::-webkit-scrollbar {
