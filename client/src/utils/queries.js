@@ -1,69 +1,49 @@
 import { gql } from '@apollo/client';
 
-export const QUERY_PRODUCTS = gql`
-  query getProducts($category: ID) {
-    products(category: $category) {
+export const QUERY_SCORE = gql`
+  query typingScores {
+    score {
       _id
-      name
-      description
-      price
-      quantity
-      image
-      category {
-        _id
-      }
-    }
-  }
-`;
-
-export const QUERY_CHECKOUT = gql`
-  query getCheckout($products: [ProductInput]) {
-    checkout(products: $products) {
-      session
-    }
-  }
-`;
-
-export const QUERY_ALL_PRODUCTS = gql`
-  {
-    products {
-      _id
-      name
-      description
-      price
-      quantity
-      category {
-        name
-      }
-    }
-  }
-`;
-
-export const QUERY_CATEGORIES = gql`
-  {
-    categories {
-      _id
-      name
+      words_per_minute
+      mistakes
+      accuracy
+      test_date
     }
   }
 `;
 
 export const QUERY_USER = gql`
-  {
+  query user {
     user {
-      firstName
-      lastName
-      orders {
-        _id
-        purchaseDate
-        products {
-          _id
-          name
-          description
-          price
-          quantity
-          image
-        }
+      _id
+      username
+    }
+  }
+`;
+
+export const QUERY_ALL_USERS = gql`
+  {
+    query user {
+      _id
+      username
+      typing_score {
+        words_per_minute
+        mistakes
+        accuracy
+        test_date
+      }
+    }
+  }
+`;
+
+export const QUERY_ALL_SCORES = gql`
+  {
+    query typingscores {
+      typing_scores {
+        words_per_minute
+        mistakes
+        accuracy
+        test_date
       }
     }
   }

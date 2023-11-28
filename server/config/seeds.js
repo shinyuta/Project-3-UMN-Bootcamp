@@ -11,7 +11,15 @@ db.once('open', async () => {
         wordsPerMinute: 61,
         accuracy: 80,
         testDate: 11152023, 
-      }
+      },
+    ]);
+
+    const user = await User.insertMany([
+      {
+        userName: 'hypnoticspxlls',
+        email: 'mdeavers18@gmail.com',
+        password: 'password',
+      },
     ]);
 
   // const products = await Product.insertMany([

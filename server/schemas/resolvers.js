@@ -4,9 +4,20 @@ const { signToken, AuthenticationError } = require('../utils/auth');
 
 const resolvers = {
   Query: {
-    typingScores: async () => {
-      const user = User(username) // how to find single user's scores
-      return await TypingScore.findOne(user._id).sort({testDate: 'desc'}).limit(10)
+    typingScores: async (parent, args, context) => {
+      if(!context.user){
+        throw new AuthenticationError('User not authenticated');
+      }
+
+      const user = await User.findById(context.user._id);
+      if(!user){
+        throw new AuthenticationError('User not found');
+      }
+
+      return await TypingScore.find({user: context.user._id}).sort({testDate: 'desc'}).limit(10);
+
+    //   const user = User.findById(context.user._id) // how to find single user's scores
+    //   return await TypingScore.find({user: context.user._id}).sort({testDate: 'desc'}).limit(10)
     }, 
     user: async () => {
       return await User.find().sort({testDate: 'desc'}).limit(10)
@@ -15,15 +26,25 @@ const resolvers = {
 
   Mutation: {
 
-  addUser: async (parent, args) => {
-    const user = await User.create(args);
-    const token = signToken(user);
+  // addUser: async (parent, args) => {
+  //   const user = await User.create(args);
+  //   const token = signToken(user);
 
-    return { token, user };
-  },
+  //   return { token, user };
+  // },
 
   addTypingScore: async (parent, args) => {
-    
+    typingScore.create() // First create a TypingScore
+    if(args.username){
+      const user = await User.create(args); //create a new user, add score to new user
+      const token = signToken(user); // thinkabout signing them in (return an Auth)
+    } else {
+      // the user already exists and just needs to be updated
+    }
+
+    // Add score's id to user
+    // if things go well
+    return "It went good!"
   },
 
   updateUser: async (parent, args, context) => {

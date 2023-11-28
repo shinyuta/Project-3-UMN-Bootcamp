@@ -6,11 +6,11 @@ const typeDefs = `
     email: String!
   }
 
-  type TypingScores {
-    user: User
-    wordsPerMinute: Number!
-    accuracy: Number!
-    testDate: Date!
+  type TypingScore {
+    user (_id: ID!) : User
+    wordsPerMinute: Int!
+    accuracy: Int!
+    testDate: Int!
   }
 
   type Auth {
@@ -19,20 +19,18 @@ const typeDefs = `
   }
 
   type Query {
-    // an array of all users and typing scores
     users: [User]
     typingScores: [TypingScore]
     user: User
 
   }
 
+
   type Mutation {
     addUser(userName: String!, email: String!, password: String!): Auth
-    addTypingScore(user: User, wordsPerMinute: Number!, accuracy: Number!, testDate: Date!)
+    addTypingScore(userName: String, email: String, password: String, wordsPerMinute: Int!, accuracy: Int!, testDate: Int!): Auth
     updateUser(userName: String, email: String, password: String): User
     login(email: String!, password: String!): Auth
-    // deleteUser()
-    // deleteTypingScore()
   }
   
 `;
