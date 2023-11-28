@@ -22,7 +22,6 @@ const typeDefs = `
     users: [User]
     typingScores: [TypingScore]
     user: User
-
   }
 
 
