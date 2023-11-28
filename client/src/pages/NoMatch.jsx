@@ -1,4 +1,3 @@
-import Jumbotron from "../components/Jumbotron";
 
 const NoMatch = () => {
   return (

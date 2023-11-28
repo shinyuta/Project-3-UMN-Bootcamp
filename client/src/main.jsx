@@ -4,9 +4,10 @@ import './index.css';
 
 import App from './App.jsx';
 import NoMatch from './pages/NoMatch';
+import Account from './pages/Account.jsx';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import Test from './pages/Test.jsx';
+import TypingTest from './pages/TypingTest.jsx';
 
 const router = createBrowserRouter([
   {
@@ -16,7 +17,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Test />
+        element: <TypingTest />
       }, {
         path: '/login',
         element: <Login />
@@ -25,7 +26,10 @@ const router = createBrowserRouter([
         element: <Signup />
       }, {
         path: '/test',
-        element: <Test />
+        element: <TypingTest />
+      }, {
+        path: '/account',
+        element: <Account />
       }
     ],
   },
