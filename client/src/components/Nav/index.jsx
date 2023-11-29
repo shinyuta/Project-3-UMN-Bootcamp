@@ -25,11 +25,11 @@ function Nav() {
 
   return (
     <header>
-      <p className="logo" src="" alt="logo"><Link to="/">TYPING.TEST</Link></p>
+      <p className="logo" src="" alt="logo"><Link to="/" className="Link">TYPING.TEST</Link></p>
       <nav>
         {showNavigation()}
       </nav>
-      <a className="buttonLink"><button><Link to = "/contact">Contact</Link></button></a>
+      <a className="buttonLink"><button><Link to = "/contact" className="Link2">Contact</Link></button></a>
     </header>
   );
 }
