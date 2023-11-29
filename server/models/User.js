@@ -20,7 +20,12 @@ const userSchema = new Schema({
     required: true,
     minlength: 5
   },
-  
+  TypingScores: [
+    {
+      type: Schema.Types.ObjectId,
+      ref:"TypingScore"
+    }
+  ]
 });
 
 // set up pre-save middleware to create password
