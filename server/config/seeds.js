@@ -2,7 +2,9 @@ const db = require('./connection');
 const { User, TypingScore } = require('../models');
 const cleanDB = require('./cleanDB');
 
-db.once('open', async () => {
+const seedData = async () => {
+  try{
+
   await cleanDB('TypingScore', 'typingScores');
   await cleanDB('User', 'users');
 
@@ -33,8 +35,9 @@ db.once('open', async () => {
   });
 
   console.log('users seeded');
-} catch (error) {
+} catch(error) {
   console.error('Error seeding data:', error);
 } finally {
   process.exit();
-});
+}
+}
