@@ -25,14 +25,7 @@ const resolvers = {
   },
 
   Mutation: {
-
-  // addUser: async (parent, args) => {
-  //   const user = await User.create(args);
-  //   const token = signToken(user);
-
-  //   return { token, user };
-  // },
-
+    
   addTypingScore: async (parent, args) => {
     typingScore.create() // First create a TypingScore
     if(args.username){
