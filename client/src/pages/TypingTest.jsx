@@ -2,134 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 
 const TypingTest = () => {
 
-    // const [paragraphs, setParagraphs] = useState([
-    //     "Why do Americans have so many different types of towels? We have beach towels, hand towels, bath towels, dish towels, camping towels, quick-dry towels, and let's not forget paper towels. Would 1 type of towel work for each of these things? Let's take a beach towel. It can be used to dry your hands and body with no difficulty. A beach towel could be used to dry dishes. Just think how many dishes you could dry with one beach towel. I've used a beach towel with no adverse effects while camping. If you buy a thin beach towel it can dry quickly too. I'd probably cut up a beach towel to wipe down counters or for cleaning other items, but a full beach towel could be used too. Is having so many types of towels an extravagant luxury that Americans enjoy or is it necessary? I’d say it's overkill and we could cut down on the many types of towels that manufacturers deem necessary.",
-    //     "The wave crashed and hit the sandcastle head-on. The sandcastle began to melt under the waves force and as the wave receded, half the sandcastle was gone. The next wave hit, not quite as strong, but still managed to cover the remains of the sandcastle and take more of it away. The third wave, a big one, crashed over the sandcastle completely covering and engulfing it. When it receded, there was no trace the sandcastle ever existed and hours of hard work disappeared forever.",
-    //     "Her hand was balled into a fist with her keys protruding out from between her fingers. This was the weapon her father had shown her how to make when she walked alone to her car after work. She wished that she had something a little more potent than keys between her fingers. It would have been nice to have some mace or pepper spray. He had been meaning to buy some but had never gotten around to it. As the mother bear took another step forward with her cubs in tow, she knew her fist with keys wasn't going to be an adequate defense for this situation.",
-    //     "It was supposed to be a dream vacation. They had planned it over a year in advance so that it would be perfect in every way. It had been what they had been looking forward to through all the turmoil and negativity around them. It had been the light at the end of both their tunnels. Now that the dream vacation was only a week away, the virus had stopped all air travel.",
-    //     "They needed to find a place to eat. The kids were beginning to get grumpy in the back seat and if they didn't find them food soon, it was just a matter of time before they were faced with a complete meltdown. Even knowing this, the solution wasn't easy. Everyone in the car had a different opinion on where the best place to eat would be with nobody agreeing with the suggestions of the others. It seemed to be an impossible no-win situation where not everyone would be happy no matter where they decided to eat which in itself would lead to a meltdown. Yet a decision needed to be made and it needed to be made quickly."
-    // ]);
-    
-    // consts
-
-    // const [charIndex, setCharIndex] = useState(0);
-
-    // const [isTyping, setIsTyping] = useState(false);
-
-    // const typingTextRef = useRef(null);
-    // const inputFieldRef = useRef(null);
-
-    // useEffect(() => {
-
-    //     loadParagraph();
-
-    //     inputFieldRef.current.addEventListener("input", inputTyping);
-    //     document.addEventListener("keydown", () => inputFieldRef.current.focus());
-
-    //     return () => {
-    //         document.removeEventListener("keydown", () => inputFieldRef.current.focus());
-    //     };
-
-    // }, [charIndex, mistakes, timeLeft, isTyping]);
-
-
-
-    // const loadParagraph = () => {
-
-    //     const randomIDX = Math.floor(Math.random() * paragraphs.length);
-    //     typingTextRef.current.innerHTML = "";
-    //     paragraphs[randomIDX].split("").forEach((char) => {
-    //         let span = `<span>${char}</span>`
-    //         typingTextRef.current.innerHTML += span;
-    //     });
-
-    //     typingTextRef.current.querySelectorAll("span")[0].classList.add("active");
-    // };
-
-
-    // const initTyping = () => {
-    //     let characters = typingTextRef.current.querySelectorAll("span");
-    //     let typedChar = inputFieldRef.current.value.split("")[charIndex];
-    //     if (charIndex < characters.length - 1 && timeLeft > 0) {
-            // if (!isTyping) {
-            //     setTimer(setInterval(initTimer, 1000));
-            //     setIsTyping(true);
-            // }
-    //         if (typedChar == null) {
-    //             if (charIndex > 0) {
-    //                 setCharIndex((prevIndex) => prevIndex - 1);
-
-    //                 if (characters[charIndex].classList.contains("incorrect")) {
-    //                     setMistakes((prevMistakes) => prevMistakes - 1);
-    //                 };
-
-    //                 characters[charIndex].classList.remove("correct", "incorrect");
-    //             }
-
-    //         } else {
-
-    //             if (characters[charIndex].innerText === typedChar) {
-    //                 characters[charIndex].classList.add("correct");
-
-    //             } else {
-    //                 setMistakes((prevMistakes) => prevMistakes + 1);
-    //                 characters[charIndex].classList.add("incorrect");
-    //             }
-    //             setCharIndex((prevIndex) => prevIndex + 1);
-    //         }
-    //         // 
-    //         characters.forEach(span => span.classList.remove("active"));
-    //         characters[charIndex].classList.add("active");
-    
-    //         let wpm = Math.round(((charIndex - mistakes) / 5) / (maxTime - timeLeft) * 60);
-    //         wpm = wpm < 0 || !wpm || wpm === Infinity ? 0: wpm;
-            
-    //         setMistakes(mistakes);
-    //         setCharIndex(charIndex);
-
-    //         wpm = Math.round(((charIndex - mistakes) / 5) / (maxTime - timeLeft) * 60);
-    //         wpm = wpm < 0 || !wpm || wpm === Infinity ? 0: wpm;
-            
-    //         setTimeLeft(timeLeft - 1);
-
-    //         // wpmTag.innerText = wpm;
-    //         // mistakeTag.innerText = mistakes;
-    //         // accTag.innerText = `${Math.round(100 - ((mistakes / charIndex) * 100))}%`;
-            
-    //     } else {
-    //         clearInterval(timer);
-    //         inputFieldRef.current.value = "";
-    //     }
-    // };
-
-    // const initTimer = () => {
-    //     if (timeLeft > 0) {
-    //         setTimeLeft(timeLeft - 1);
-    //         // timeTag.innerText = timeLeft;
-    //         let wpm = Math.round(((charIndex - mistakes) / 5) / (maxTime - timeLeft) * 60);
-    //         // wpmTag.innerText = wpm;
-    //         wpm = wpm < 0 || !wpm || wpm === Infinity ? 0: wpm;
-    //     } else {
-    //         clearInterval(timer);
-    //     }
-    // };
-
-    // const resetGame = () => {
-    //     loadParagraph();
-    //     clearInterval(timer);
-    //     setTimeLeft(maxTime);
-    //     setCharIndex(0);
-    //     setMistakes(0);
-    //     setIsTyping(false);
-    //     inputFieldRef.current.value = "";
-    // }
-
-
-    // const inputTyping = () => {
-    //     const userInput = inputFieldRef.current.value;
-    //     //logic for changing colors
-
-    // }
     const [mistakes, setMistakes] = useState(0);
     const [accuracy, setAccuracy] = useState(0);
     const [charIndex, setCharIndex] = useState(0);
@@ -143,7 +15,8 @@ const TypingTest = () => {
     const mapped = text.split("").map((char, idx) => {
         return {
             content: char,
-            correct: true,
+            correct: false,
+            incorrect: false,
             active: idx == 0 ? true: false,
         };
     });
@@ -175,9 +48,11 @@ const TypingTest = () => {
             // correct incorrect
             if (content[idx].content == char) {
                 copy[idx].correct = true;
+                copy[idx].incorrect = false;
                 setContent(copy);
             } else {
                 copy[idx].correct = false;
+                copy[idx].incorrect = true;
                 setContent(copy);
                 setMistakes(mistakes + 1);
             }
@@ -240,7 +115,7 @@ const TypingTest = () => {
                 />
                 <p className = "paragraph">
                     {content.map((item, idx) => (
-                        <span key={idx} className={`${item.correct ? "correct" : "incorrect"} ${item.active ? "active" : ""}`}>
+                        <span key={idx} className={`${item.correct ? "correct" : ""} ${item.incorrect ? "incorrect" : ""} ${item.active ? "active" : ""}`}>
                             {item.content}
                         </span>
                     ))}
