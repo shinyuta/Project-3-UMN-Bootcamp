@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import Auth from '../utils/auth';
-import { ADD_USER } from '../utils/mutations';
+import Auth from '@/utils/auth';
+import { ADD_USER } from '@/components/graphql/mutations';
+
 
 function Signup(props) {
   const [formState, setFormState] = useState({ email: '', password: '' });
@@ -31,56 +32,59 @@ function Signup(props) {
   };
 
   return (
-    <div className="container my-1">
-      <Link to="/login">← Go to Login</Link>
-
-      <h2>Signup</h2>
-      <form onSubmit={handleFormSubmit}>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="firstName">First Name:</label>
-          <input
-            placeholder="First"
-            name="firstName"
-            type="firstName"
-            id="firstName"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="lastName">Last Name:</label>
-          <input
-            placeholder="Last"
-            name="lastName"
-            type="lastName"
-            id="lastName"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="email">Email:</label>
-          <input
-            placeholder="youremail@test.com"
-            name="email"
-            type="email"
-            id="email"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="pwd">Password:</label>
-          <input
-            placeholder="******"
-            name="password"
-            type="password"
-            id="pwd"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex-row flex-end">
-          <button type="submit">Submit</button>
-        </div>
-      </form>
-    </div>
+      <div className = "wrapper">
+        <h1>Sign Up</h1>
+        <h4>to start saving your results!</h4>
+        <br/>
+        <form onSubmit={handleFormSubmit} className="signup-form"> 
+            <div className="text-field-signup">
+                <input 
+                  type="text"
+                  id="firstName"
+                  onChange={handleChange}
+                  required
+                />
+                <span></span>
+                <label htmlFor='firstName'>First Name</label>
+            </div>
+            <div className="text-field-signup">
+                <input 
+                  type="text" 
+                  id="lastName"
+                  required
+                />
+                <span></span>
+                <label htmlFor='lastName'>Last Name</label>
+            </div>
+            <div className="text-field-signup">
+                <input 
+                  type="text" 
+                  id="username" 
+                  onChange={handleChange}
+                  required
+                />
+                <span></span>
+                <label htmlFor='email'>Email</label>
+            </div>
+            <div className="text-field-signup">
+                <input 
+                  type="password" 
+                  id="password"
+                  onChange={handleChange}
+                  required
+                />
+                <span></span>
+                <label htmlFor='Password'>Password</label>
+            </div>
+            <div className="terms-privacy-div">By clicking the Sign Up button you agree to our <a href='#' className ="terms-privacy">Terms and Conditions</a>
+            and <a href='#' className ="terms-privacy">Privacy Policy</a>
+            </div>
+            <input type="submit" value="Sign Up"/>
+            <div className="signup">
+                Already a Member? <Link to="/login">Login</Link>
+            </div>
+        </form>
+      </div>
   );
 }
 

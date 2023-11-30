@@ -2,19 +2,14 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
-const Order = require('./Order');
+const TypingScore = require('./TypingScore');
 
 const userSchema = new Schema({
-  firstName: {
-    type: String,
-    required: true,
-    trim: true
-  },
-  lastName: {
-    type: String,
-    required: true,
-    trim: true
-  },
+  // userName: {
+  //   type: String,
+  //   required: true,
+  //   unique: true
+  // },
   email: {
     type: String,
     required: true,
@@ -25,7 +20,12 @@ const userSchema = new Schema({
     required: true,
     minlength: 5
   },
-  orders: [Order.schema]
+  TypingScores: [
+    {
+      type: Schema.Types.ObjectId,
+      ref:"TypingScore"
+    }
+  ]
 });
 
 // set up pre-save middleware to create password

@@ -6,50 +6,30 @@ function Nav() {
   function showNavigation() {
     if (Auth.loggedIn()) {
       return (
-        <ul className="flex-row">
-          <li className="mx-1">
-            <Link to="/orderHistory">
-              Order History
-            </Link>
+        <ul className="navLinks">
+          <li className = "loginBtn">
+            <a href="/" onClick={() => Auth.logout()}></a>
           </li>
-          <li className="mx-1">
-            {/* this is not using the Link component to logout or user and then refresh the application to the start */}
-            <a href="/" onClick={() => Auth.logout()}>
-              Logout
-            </a>
-          </li>
+          <li className = "userBtn"><Link to="/account">User</Link></li>
         </ul>
       );
     } else {
       return (
-        <ul className="flex-row">
-          <li className="mx-1">
-            <Link to="/signup">
-              Signup
-            </Link>
-          </li>
-          <li className="mx-1">
-            <Link to="/login">
-              Login
-            </Link>
-          </li>
+        <ul className="navLinks">
+            <li className = "loginBtn"><Link to="/login">Login</Link></li>
+            <li className = "signUpBtn"><Link to="/signup">Signup</Link></li>
         </ul>
       );
     }
   }
 
   return (
-    <header className="flex-row px-1">
-      <h1>
-        <Link to="/">
-          <span role="img" aria-label="shopping bag">🛍️</span>
-          -Shop-Shop
-        </Link>
-      </h1>
-
+    <header>
+      <p className="logo" src="" alt="logo"><Link to="/" className="Link">TYPING.TEST</Link></p>
       <nav>
         {showNavigation()}
       </nav>
+      <a className="buttonLink"><button><Link to = "/contact" className="Link2">Contact</Link></button></a>
     </header>
   );
 }

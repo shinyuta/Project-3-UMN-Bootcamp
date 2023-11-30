@@ -1,144 +1,76 @@
-const { User, Product, Category, Order } = require('../models');
-const { signToken, AuthenticationError } = require('../utils/auth');
-const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
+const { User, TypingScore } = require('../models');
+const { signToken } = require('../utils/auth');
+const { AuthenticationError } = require('apollo-server-errors');
+// const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
 
 const resolvers = {
   Query: {
-    categories: async () => {
-      return await Category.find();
-    },
-    products: async (parent, { category, name }) => {
-      const params = {};
-
-      if (category) {
-        params.category = category;
+    typingScores: async (parent, args, context) => {
+      if (!context.user) {
+        throw new AuthenticationError('User not authenticated');
       }
+      return await TypingScore.find({user: context.user._id}).sort({testDate: 'desc'}).limit(10);
 
-      if (name) {
-        params.name = {
-          $regex: name,
-        };
-      }
-
-      return await Product.find(params).populate('category');
+    //   const user = User.findById(context.user._id) // how to find single user's scores
+    //   return await TypingScore.find({user: context.user._id}).sort({testDate: 'desc'}).limit(10)
+    }, 
+    user: async () => {
+      return await User.find().sort({testDate: 'desc'}).limit(10)
     },
-    product: async (parent, { _id }) => {
-      return await Product.findById(_id).populate('category');
-    },
-    user: async (parent, args, context) => {
-      if (context.user) {
-        const user = await User.findById(context.user._id).populate({
-          path: 'orders.products',
-          populate: 'category',
-        });
 
-        user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
 
-        return user;
-      }
-
-      throw AuthenticationError;
-    },
-    order: async (parent, { _id }, context) => {
-      if (context.user) {
-        const user = await User.findById(context.user._id).populate({
-          path: 'orders.products',
-          populate: 'category',
-        });
-
-        return user.orders.id(_id);
-      }
-
-      throw AuthenticationError;
-    },
-    checkout: async (parent, args, context) => {
-      const url = new URL(context.headers.referer).origin;
-      // We map through the list of products sent by the client to extract the _id of each item and create a new Order.
-      await Order.create({ products: args.products.map(({ _id }) => _id) });
-      const line_items = [];
-
-      for (const product of args.products) {
-        line_items.push({
-          price_data: {
-            currency: 'usd',
-            product_data: {
-              name: product.name,
-              description: product.description,
-              images: [`${url}/images/${product.image}`],
-            },
-            unit_amount: product.price * 100,
-          },
-          quantity: product.purchaseQuantity,
-        });
-      }
-
-      const session = await stripe.checkout.sessions.create({
-        payment_method_types: ['card'],
-        line_items,
-        mode: 'payment',
-        success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${url}/`,
-      });
-
-      return { session: session.id };
-    },
   },
+
   Mutation: {
-    addUser: async (parent, args) => {
-      const user = await User.create(args);
-      const token = signToken(user);
 
-      return { token, user };
-    },
-    addOrder: async (parent, { products }, context) => {
-      if (context.user) {
-        const order = new Order({ products });
+  addUser: async (parent, args) => {
+    try {
+      const newUser = await User.create(args);
+      return newUser;
+    } catch (error) {
 
-        await User.findByIdAndUpdate(context.user._id, {
-          $push: { orders: order },
-        });
+      console.error('Error adding user:', error);
+      throw new Error('Failed to add user');
 
-        return order;
-      }
+    }
 
-      throw AuthenticationError;
-    },
-    updateUser: async (parent, args, context) => {
-      if (context.user) {
-        return await User.findByIdAndUpdate(context.user._id, args, {
-          new: true,
-        });
-      }
+  },
+    
+  addTypingScore: async (parent, args) => {
+    try {
+      const newTypingScore = await TypingScore.create(args);
+      return newTypingScore;
+    } catch (error) {
+      console.error('Error adding typing score', error);
+      throw new Error('Failed to add typing score');
+    }
+  }
+},
 
-      throw AuthenticationError;
-    },
-    updateProduct: async (parent, { _id, quantity }) => {
-      const decrement = Math.abs(quantity) * -1;
-
-      return await Product.findByIdAndUpdate(
-        _id,
-        { $inc: { quantity: decrement } },
-        { new: true }
-      );
-    },
-    login: async (parent, { email, password }) => {
+  updateUser: async (parent, args, context) => {
+    if (context.user) {
+      return await User.findByIdAndUpdate(context.user._id, args, {
+        new: true,
+      });
+    }
+    
+  throw AuthenticationError;
+  },
+  
+  login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
 
-      if (!user) {
-        throw AuthenticationError;
-      }
-
+    if (!user) {
+      throw AuthenticationError;
+    }
       const correctPw = await user.isCorrectPassword(password);
-
       if (!correctPw) {
         throw AuthenticationError;
       }
 
       const token = signToken(user);
-
       return { token, user };
     },
-  },
-};
+  };
 
 module.exports = resolvers;

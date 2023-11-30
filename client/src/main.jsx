@@ -3,13 +3,11 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './index.css';
 
 import App from './App.jsx';
-import Home from './pages/Home';
-import Detail from './pages/Detail';
 import NoMatch from './pages/NoMatch';
+import Account from './pages/Account.jsx';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import OrderHistory from './pages/OrderHistory';
-import Success from './pages/Success';
+import TypingTest from './pages/TypingTest.jsx';
 
 const router = createBrowserRouter([
   {
@@ -19,7 +17,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home />
+        element: <TypingTest />
       }, {
         path: '/login',
         element: <Login />
@@ -27,15 +25,12 @@ const router = createBrowserRouter([
         path: '/signup',
         element: <Signup />
       }, {
-        path: '/orderHistory',
-        element: <OrderHistory />
+        path: '/test',
+        element: <TypingTest />
       }, {
-        path: '/products/:id',
-        element: <Detail />
-      }, {
-        path: '/success',
-        element: <Success />
-      },
+        path: '/account',
+        element: <Account />
+      }
     ],
   },
 ]);
