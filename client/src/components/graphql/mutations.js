@@ -1,13 +1,11 @@
 import { gql } from '@apollo/client';
 
 export const ADD_USER = gql`
-  mutation addUser(
-    $userName: String!, 
+  mutation addUser( 
     $email: String!, 
     $password: String!
   ) {
     addUser(
-      userName: $userName,
       email: $email,
       password: $password
   ) {
@@ -21,8 +19,7 @@ export const ADD_USER = gql`
 `;
 
 export const ADD_SCORE = gql`
-  mutation addTypingScore(
-    $userName: String, 
+  mutation addTypingScore( 
     $email: String, 
     $password: String, 
     $wordsPerMinute: Int!, 
@@ -31,7 +28,6 @@ export const ADD_SCORE = gql`
     ) {
     addTypingScore
     (
-      userName: $userName,
       email: $email,
       password: $password
       wordsPerMinute: $wordsPerMinute, 
@@ -48,13 +44,11 @@ export const ADD_SCORE = gql`
 `;
 
 export const UPDATE_USER = gql`
-  mutation updateUser(
-    $userName: String!, 
+  mutation updateUser( 
     $email: String!
     $password: String!
     ) {
       login(
-        userName: $userName
         email: $email, 
         password: $password
       ) {
@@ -68,7 +62,7 @@ export const UPDATE_USER = gql`
 
 export const LOGIN = gql`
   mutation login(
-    $userName: String!, 
+    $email: String!, 
     $password: String!
     ) {
       login(
