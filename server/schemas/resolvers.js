@@ -6,15 +6,9 @@ const { AuthenticationError } = require('apollo-server-errors');
 const resolvers = {
   Query: {
     typingScores: async (parent, args, context) => {
-      if(!context.user){
+      if (!context.user) {
         throw new AuthenticationError('User not authenticated');
       }
-
-      const user = await User.findById(context.user._id);
-      if(!user){
-        throw new AuthenticationError('User not found');
-      }
-
       return await TypingScore.find({user: context.user._id}).sort({testDate: 'desc'}).limit(10);
 
     //   const user = User.findById(context.user._id) // how to find single user's scores
@@ -43,18 +37,15 @@ const resolvers = {
   },
     
   addTypingScore: async (parent, args) => {
-    typingScore.create() // First create a TypingScore
-    if(args.username)
-    {
-       //create a new user, add score to new user
-    } else {
-      // the user already exists and just needs to be updated
+    try {
+      const newTypingScore = await TypingScore.create(args);
+      return newTypingScore;
+    } catch (error) {
+      console.error('Error adding typing score', error);
+      throw new Error('Failed to add typing score');
     }
-
-    // Add score's id to user
-    // if things go well
-    return "It went good!"
-  },
+  }
+},
 
   updateUser: async (parent, args, context) => {
     if (context.user) {
@@ -80,7 +71,6 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
-  },
-};
+  };
 
 module.exports = resolvers;
