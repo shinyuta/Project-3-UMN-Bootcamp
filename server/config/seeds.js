@@ -24,7 +24,7 @@ const seedData = async () => {
 
     // Your seeding logic here...
     await User.create({
-      userName: 'Pamela96',
+      // userName: 'Pamela96',
       email: 'pamela@testmail.com',
       password: 'password12345',
       typingScore: [
@@ -37,7 +37,7 @@ const seedData = async () => {
     });
 
     await User.create({
-      userName: 'Elijah78',
+      // userName: 'Elijah78',
       email: 'eholt@testmail.com',
       password: 'password12345',
       typingScore: [

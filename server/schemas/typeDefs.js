@@ -2,12 +2,12 @@ const typeDefs = `
 
   type User {
     _id: ID!
-    userName: String!
     email: String!
+    password: String!
+    TypingScores: [TypingScore]
   }
 
   type TypingScore {
-    user (_id: ID!) : User
     wordsPerMinute: Int!
     accuracy: Int!
     testDate: Int!
@@ -26,9 +26,9 @@ const typeDefs = `
 
 
   type Mutation {
-    addUser(userName: String!, email: String!, password: String!): Auth
-    addTypingScore(userName: String, email: String, password: String, wordsPerMinute: Int!, accuracy: Int!, testDate: Int!): Auth
-    updateUser(userName: String, email: String, password: String): User
+    addUser(email: String!, password: String!): Auth
+    addTypingScoreemail: String, password: String, wordsPerMinute: Int!, accuracy: Int!, testDate: Int!): Auth
+    updateUser(email: String, password: String): User
     login(email: String!, password: String!): Auth
   }
   

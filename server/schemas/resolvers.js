@@ -28,12 +28,25 @@ const resolvers = {
   },
 
   Mutation: {
+
+  addUser: async (parent, args) => {
+    try {
+      const newUser = await User.create(args);
+      return newUser;
+    } catch (error) {
+
+      console.error('Error adding user:', error);
+      throw new Error('Failed to add user');
+
+    }
+
+  },
     
   addTypingScore: async (parent, args) => {
     typingScore.create() // First create a TypingScore
-    if(args.username){
-      const user = await User.create(args); //create a new user, add score to new user
-      const token = signToken(user); // thinkabout signing them in (return an Auth)
+    if(args.username)
+    {
+       //create a new user, add score to new user
     } else {
       // the user already exists and just needs to be updated
     }
