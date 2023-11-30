@@ -37,12 +37,12 @@ function Login(props) {
         <div className="text-field">
             <input 
               type="text" 
-              id="username" 
+              id="email" 
               onChange={handleChange}
               required
             />
             <span></span>
-            <label htmlFor='username'>Username</label>
+            <label htmlFor='email'>Email</label>
         </div>
         <div className="text-field">
             <input 
