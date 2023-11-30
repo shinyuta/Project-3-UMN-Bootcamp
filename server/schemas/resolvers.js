@@ -1,5 +1,6 @@
 const { User, TypingScore } = require('../models');
-const { signToken, AuthenticationError } = require('../utils/auth');
+const { signToken } = require('../utils/auth');
+const { AuthenticationError } = require('apollo-server-errors');
 // const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
 
 const resolvers = {
@@ -21,7 +22,9 @@ const resolvers = {
     }, 
     user: async () => {
       return await User.find().sort({testDate: 'desc'}).limit(10)
-    }
+    },
+
+
   },
 
   Mutation: {
