@@ -27,7 +27,7 @@ const typeDefs = `
 
   type Mutation {
     addUser(email: String!, password: String!): Auth
-    addTypingScoreemail: String, password: String, wordsPerMinute: Int!, accuracy: Int!, testDate: Int!): Auth
+    addTypingScore(email: String, password: String, wordsPerMinute: Int!, accuracy: Int!, testDate: Int!): Auth
     updateUser(email: String, password: String): User
     login(email: String!, password: String!): Auth
   }

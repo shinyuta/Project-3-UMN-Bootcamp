@@ -64,7 +64,7 @@ function Signup(props) {
                   required
                 />
                 <span></span>
-                <label htmlFor='username'>User Name</label>
+                <label htmlFor='email'>Email</label>
             </div>
             <div className="text-field-signup">
                 <input 
