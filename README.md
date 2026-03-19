@@ -3,7 +3,7 @@
 ## Description 
 Interactive MERN stack single-page application for practicing typing speed and accuracy.
 
-[Typing Test on GitHub Pages](https://shinyuta.github.io/Project-3-UMN-Bootcamp/)
+[Typing Test on GitHub Pages](https://shinyuta.github.io/typing-test-react/)
 
 ## Table of Contents
 
