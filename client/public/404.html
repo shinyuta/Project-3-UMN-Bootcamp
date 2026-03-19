@@ -4,12 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Redirecting...</title>
-    <meta http-equiv="refresh" content="0; url=./" />
+    <!-- Redirect unknown routes back to the app root (works for GitHub Pages sub-paths). -->
+    <meta http-equiv="refresh" content="0; url=../" />
   </head>
   <body>
     <script>
-      // GitHub Pages returns 404.html for unknown routes; redirect back to the app root.
-      window.location.replace('./');
+      // GitHub Pages returns 404.html for unknown SPA routes (e.g. /login).
+      // We redirect back to the "site root" by removing the last URL segment.
+      var path = window.location.pathname.replace(/\/+$/, "");
+      var root = path.replace(/\/[^\/]*$/, "");
+      if (!root) root = "/";
+      window.location.replace(root + "/");
     </script>
   </body>
 </html>

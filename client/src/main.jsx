@@ -10,6 +10,19 @@ import Signup from './pages/Signup';
 import TypingTest from './pages/TypingTest.jsx';
 import Contact from './pages/Contact.jsx';
 
+// When deployed to GitHub Pages, the app is served from a sub-path like:
+// /<user>/<repo>/.
+// createBrowserRouter needs a basename so "/" inside the router matches "/<repo>/"
+function getGitHubPagesBasename() {
+  if (typeof window === "undefined") return "";
+  const parts = window.location.pathname.split("/").filter(Boolean);
+  // On GitHub Pages root: ["Project-3-UMN-Bootcamp", ...optional route parts]
+  if (parts.length === 0) return "";
+  return `/${parts[0]}`;
+}
+
+const basename = getGitHubPagesBasename();
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -37,7 +50,7 @@ const router = createBrowserRouter([
       }
     ],
   },
-]);
+], { basename });
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <RouterProvider router={router} />

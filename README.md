@@ -1,32 +1,56 @@
 # Typing Test
 
 ## Description 
-Created an interactive MERN Stack Single-Page Application
+Interactive MERN stack single-page application for practicing typing speed and accuracy.
 
-[Link to Deployed App]()
-
-[Screenshot]()
+[Typing Test on GitHub Pages](https://shinyuta.github.io/Project-3-UMN-Bootcamp/)
 
 ## Table of Contents
 
 * [Installation](#installation)
-* [Testing](#testing)
-* [Questions](#questions)
+* [Running locally](#running-locally)
+* [Deployment (GitHub Pages)](#deployment-github-pages)
+* [Contributors](#contributors)
+
+## Highlights
+
+- Timed typing test with live accuracy, mistakes, and WPM
+- Random paragraph selection from a local list
+- Theme randomizer button (dice icon) that updates site colors globally
+- Responsive navigation (hamburger on small screens) and a mock Contact page
+
+## Screenshots
+
+### Main (default theme)
+![Main typing test screen](docs/images/main.png)
+
+### Theme randomizer (light theme)
+![Light theme after randomizing](docs/images/lighttheme.png)
+
+### Mobile navigation (hamburger)
+![Mobile header layout](docs/images/mobile.png)
+
+### Login page
+![Login form styling](docs/images/loginform.png)
 
 ## Installation 
-You will need to install the following to use this project:
+From the project root:
 
-`@apollo/client`, `apollo`, `express`, `path`, `yargs`
+```bash
+npm run install
+```
 
-## Testing 
-To test this project, do the following: 
+## Running locally
+```bash
+npm run develop
+```
 
-Run commands `npm install`, `npm run start`
+## Deployment (GitHub Pages)
 
-## Questions 
+This app is deployed as a static Vite build
 
-For any questions, please contact the Github
-You can view more of our work on our profiles
-[Yuta](https://github.com/shinyuta)
-[Walter](https://github.com/Boilermaker74)
-[M](https://github.com/bloodymajima)
+## Contributors
+
+- [Yuta (shinyuta)](https://github.com/shinyuta)
+- [Walter (Boilermaker74)](https://github.com/Boilermaker74)
+- [M (bloodymajima)](https://github.com/bloodymajima)
