@@ -21,17 +21,17 @@ Interactive MERN stack single-page application for practicing typing speed and a
 
 ## Screenshots
 
-### Main (default theme)
-![Main typing test screen](docs/images/main.png)
+### Dark theme
+![Typing test in dark theme](images/dark.png)
 
 ### Theme randomizer (light theme)
-![Light theme after randomizing](docs/images/lighttheme.png)
+![Light theme after randomizing](images/light.png)
 
 ### Mobile navigation (hamburger)
-![Mobile header layout](docs/images/mobile.png)
+![Mobile header layout](images/mobile.png)
 
 ### Login page
-![Login form styling](docs/images/loginform.png)
+![Login form styling](images/login.png)
 
 ## Installation 
 From the project root:
