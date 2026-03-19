@@ -76,8 +76,7 @@ function Signup(props) {
                 <span></span>
                 <label htmlFor='Password'>Password</label>
             </div>
-            <div className="terms-privacy-div">By clicking the Sign Up button you agree to our <a href='#' className ="terms-privacy">Terms and Conditions</a>
-            and <a href='#' className ="terms-privacy">Privacy Policy</a>
+            <div className="terms-privacy-div">By clicking the Sign Up button you agree to our <a href='#' className ="terms-privacy">Terms and Conditions</a> and <a href='#' className ="terms-privacy">Privacy Policy</a>
             </div>
             <input type="submit" value="Sign Up"/>
             <div className="signup">

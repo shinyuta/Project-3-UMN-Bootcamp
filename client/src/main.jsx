@@ -8,6 +8,7 @@ import Account from './pages/Account.jsx';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import TypingTest from './pages/TypingTest.jsx';
+import Contact from './pages/Contact.jsx';
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,9 @@ const router = createBrowserRouter([
       }, {
         path: '/account',
         element: <Account />
+      }, {
+        path: '/contact',
+        element: <Contact />
       }
     ],
   },

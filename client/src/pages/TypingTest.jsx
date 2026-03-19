@@ -1,79 +1,86 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { paragraphs } from "../data/paragraphs";
 
 const TypingTest = () => {
 
     const [mistakes, setMistakes] = useState(0);
     const [accuracy, setAccuracy] = useState(0);
-    const [charIndex, setCharIndex] = useState(0);
-    const [direction, setDirection] = useState("forward")
+
+    const [paragraphText, setParagraphText] = useState(() => {
+        return paragraphs[Math.floor(Math.random() * paragraphs.length)];
+    });
 
     const [timer, setTimer] = useState(null);
     const [timeLeft, setTimeLeft] = useState(60);
     const [isTyping, setIsTyping] = useState(false);
-    
-    const text = "Why do Americans have so many different types of towels? We have beach towels, hand towels, bath towels, dish towels, camping towels, quick-dry towels, and let's not forget paper towels. Would 1 type of towel work for each of these things? Let's take a beach towel. It can be used to dry your hands and body with no difficulty. A beach towel could be used to dry dishes. Just think how many dishes you could dry with one beach towel. I've used a beach towel with no adverse effects while camping. If you buy a thin beach towel it can dry quickly too. I'd probably cut up a beach towel to wipe down counters or for cleaning other items, but a full beach towel could be used too. Is having so many types of towels an extravagant luxury that Americans enjoy or is it necessary? I’d say it's overkill and we could cut down on the many types of towels that manufacturers deem necessary.";
-    const mapped = text.split("").map((char, idx) => {
-        return {
+    const inputRef = useRef(null);
+    const typingTextRef = useRef(null);
+
+    function buildMapped(text) {
+        return text.split("").map((char, idx) => ({
             content: char,
             correct: false,
             incorrect: false,
-            active: idx == 0 ? true: false,
-        };
-    });
+            active: idx === 0,
+        }));
+    }
+
+    const mapped = useMemo(() => {
+        return buildMapped(paragraphText);
+    }, [paragraphText]);
 
     const [typed, setTyped] = useState("");
     const [content, setContent] = useState(mapped);
 
     useEffect(() => {
+        if (typed.length === 0) {
+            // When nothing is typed, keep the UI at the "pre-start" state.
+            setContent(mapped);
+            setMistakes(0);
+            setAccuracy(0);
+            return;
+        }
+
         const arr = typed.split("");
-        const copy = [...content];
+        // Deep copy so we don't mutate React state objects directly.
+        const copy = content.map((item) => ({ ...item }));
 
         copy.forEach((char, idx) => {
             copy[idx].active = false;
+            // Reset correctness state on every keystroke so backspace clears red.
+            copy[idx].correct = false;
+            copy[idx].incorrect = false;
         });
 
-        // direction
-        if (direction == "backward" && charIndex > 0) {
-            copy[charIndex - 1].active = true;
-            setCharIndex((char) => char-1);
-        } else if (direction == "backward" && charIndex == 0) {
-            copy[charIndex].active = true;  
-            setCharIndex(0);
-        } else {
-            copy[charIndex].active = true;
-            setCharIndex((char) => char+1);
-        }
+        // Cursor should always blink on the *next* character to type.
+        // typed.length == index of the next required character (includes spaces).
+        const activeIndex = typed.length;
+        if (copy[activeIndex]) copy[activeIndex].active = true;
         
+        let nextMistakes = 0;
         arr.forEach((char, idx) => {
-            // correct incorrect
-            if (content[idx].content == char) {
+            if (!copy[idx]) return;
+
+            // Correct/incorrect per character; recalculated every change.
+            if (copy[idx].content === char) {
                 copy[idx].correct = true;
                 copy[idx].incorrect = false;
-                setContent(copy);
             } else {
                 copy[idx].correct = false;
                 copy[idx].incorrect = true;
-                setContent(copy);
-                setMistakes(mistakes + 1);
+                nextMistakes += 1;
             }
         });
-    }, [typed, direction]);
+
+        setMistakes(nextMistakes);
+        setContent(copy);
+    }, [typed]);
 
     const handleTyping = (evt) => {
         if (isTyping == false) {
             setIsTyping(true);
         }
         setTyped(evt.target.value);
-    };
-
-    const handleKeyDown = (evt) => {
-        let key = evt.key;
-        if (key === "Backspace" || key === "Delete") {
-            setDirection("backward");
-        } else {
-            setDirection("forward");
-        }
-        console.log(key);
     };
 
     // timer
@@ -95,6 +102,37 @@ const TypingTest = () => {
         }
 
     }, [timeLeft]);
+
+    // Keep the "active" character visible inside the scrolling paragraph.
+    useEffect(() => {
+        if (!typingTextRef.current) return;
+        const activeEl = typingTextRef.current.querySelector(".active");
+        if (!activeEl) return;
+        activeEl.scrollIntoView({ block: "nearest" });
+    }, [typed, timeLeft]);
+
+    function handleTryAgain() {
+        if (timer) clearInterval(timer);
+        setTimer(null);
+        setIsTyping(false);
+        setTimeLeft(60);
+        setMistakes(0);
+        setAccuracy(0);
+        setTyped("");
+
+        // Pick a new paragraph for the next attempt.
+        // If there's more than one paragraph, avoid repeating the same one.
+        let nextParagraph = paragraphs[Math.floor(Math.random() * paragraphs.length)];
+        if (paragraphs.length > 1 && nextParagraph === paragraphText) {
+            nextParagraph = paragraphs[Math.floor(Math.random() * paragraphs.length)];
+        }
+
+        setParagraphText(nextParagraph);
+        setContent(buildMapped(nextParagraph));
+
+        // Keep the user's flow: cursor back into the typing input.
+        inputRef.current?.focus();
+    }
     
 
   return (
@@ -104,14 +142,14 @@ const TypingTest = () => {
         
         <div className="content-wrapper">
             
-            <div className="typing-text">
+            <div className="typing-text" ref={typingTextRef}>
                 <input 
                     type = "text"
                     value = {typed} 
                     className="input-field"
                     onChange={handleTyping}
-                    onKeyDown={handleKeyDown}
                     disabled={timeLeft <= 0}
+                    ref={inputRef}
                 />
                 <p className = "paragraph">
                     {content.map((item, idx) => (
@@ -142,7 +180,10 @@ const TypingTest = () => {
                             ACC:
                         </p>
                         <span>
-                            {Math.round(100 - ((mistakes / (charIndex+1)) * 100))}%
+                            {typed.length === 0
+                                ? 0
+                                : Math.max(0, Math.round(((typed.length - mistakes) / typed.length) * 100))}
+                            %
                         </span>
                     </li>
                     <li className="wpm">
@@ -150,11 +191,15 @@ const TypingTest = () => {
                             WPM:
                         </p>
                         <span>
-                            {Math.round((((charIndex+1) - mistakes) / 5) / (60 - timeLeft) * 60)}
+                            {typed.length === 0 || (60 - timeLeft) <= 0
+                                ? 0
+                                : Math.round(
+                                    ((Math.max(typed.length - mistakes, 0) / 5) / ((60 - timeLeft) / 60))
+                                  )}
                         </span>
                     </li>
                 </ul>
-                <button>
+                <button onClick={handleTryAgain}>
                     Try Again
                 </button>
             </div>

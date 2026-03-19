@@ -19,6 +19,71 @@
     --darkMainLighter: #28918d;
 }
 
+/* Theme overrides (set via data-theme on <html>) */
+[data-theme="dark"] {
+    --darkMain: #010c10;
+    --lighterMain: #021820;
+    --lighterMain2: #0f3f45;
+    --darkText: #7af6ea;
+    --highlight: #39ffe3;
+    --wrong: rgb(200, 0, 0);
+    --darkMainLighter: #1aa6a0;
+}
+
+[data-theme="light"] {
+    --darkMain: #f4f7fb;
+    --lighterMain: #ffffff;
+    --lighterMain2: #cfe7e3;
+    --darkText: #0b766e;
+    --highlight: #0891b2;
+    --wrong: #b91c1c;
+    --darkMainLighter: #0f9486;
+}
+
+[data-theme="sunset"] {
+    --darkMain: #2b1433;
+    --lighterMain: #391b45;
+    --lighterMain2: #6b2f86;
+    --darkText: #ffd6a5;
+    --highlight: #ff7a18;
+    --wrong: #ff4d4d;
+    --darkMainLighter: #ffb703;
+}
+
+/* Theme randomizer button */
+.themeRandomizer {
+    position: fixed;
+    left: clamp(12px, 4vw, 60px);
+    bottom: 18px;
+    width: 48px;
+    height: 48px;
+    border-radius: 999px;
+    border: 4px solid var(--darkMainLighter);
+    background: var(--darkText);
+    color: var(--darkMain);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    box-shadow: 0 0 10px var(--lighterMain2);
+}
+
+.themeRandomizer:hover {
+    background: var(--highlight);
+}
+
+.themeRandomizer svg {
+    width: 22px;
+    height: 22px;
+    fill: currentColor;
+}
+
+.themeRandomizer:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--highlight) 60%, transparent);
+}
+
 #root {
     display: flex !important;
     justify-content: center;
@@ -43,13 +108,14 @@
 }
 
 .Link {
-    color: var(--darkMain);
+    /* Ensure logo text is readable even when the parent logo hover is not active */
+    color: var(--darkText);
     text-decoration: none;
 }
 
 .logo:hover .Link {
-    color: var(--highlight);
-    transition: 1s;
+    color: var(--darkMain);
+    transition: color 1s ease;
 }
 
 .Link2 {
@@ -67,11 +133,15 @@
 
 .buttonLink button {
     background-color: black;
-    padding: 10px;
+    padding: 10px 16px;
     border-radius: 20px;
     border-color: var(--darkText);
     background-color: var(--darkMain);
-    color: var(--darkText)
+    color: var(--darkText);
+    font-size: 13px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .buttonLink button:hover {
@@ -95,18 +165,122 @@ li, a, button {
 }
 
 header {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
     align-items: center;
-    justify-content: space-between;
-    padding: 30px 10%;
+    padding: 18px clamp(12px, 4vw, 60px);
     position: absolute;
     top: 0;
+    left: 0;
+    right: 0;
     width: 100%;
 }
 
 .navLinks li {
-    display: inline-block;
-    padding: 0px 20px;
+    display: flex;
+    padding: 0;
+}
+
+header .logo {
+    justify-self: start;
+}
+
+.desktopNav {
+    justify-self: center;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.desktopNav .navLinks {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.contactButton {
+    justify-self: end;
+}
+
+.hamburgerWrap {
+    display: flex;
+    align-items: center;
+    justify-self: end;
+    position: relative;
+    z-index: 1000;
+}
+
+.hamburgerButton {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.hamburgerBar {
+    width: 24px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--darkText);
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.hamburgerMenu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    width: min(320px, calc(100vw - 24px));
+    max-width: calc(100vw - 24px);
+    background: var(--lighterMain);
+    border-radius: 14px;
+    box-shadow: 0 0 10px var(--lighterMain2);
+    padding: 10px;
+    box-sizing: border-box;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.hamburgerMenu.open {
+    display: block;
+}
+
+.hamburgerList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.hamburgerItem a {
+    display: block;
+    padding: 12px 14px;
+    border-radius: 10px;
+    color: var(--darkText);
+    text-decoration: none;
+    font-weight: 800;
+    background: transparent;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.hamburgerItem a:hover {
+    background: var(--darkMain);
+    color: var(--highlight);
+}
+
+.hamburgerContact {
+    display: none;
 }
 
 .navLinks li a {
@@ -129,9 +303,11 @@ header {
 body {
     display: flex;
     padding: 0 10px;
-    align-items: center;
+    /* Header is absolutely positioned; avoid vertical overlap */
+    align-items: flex-start;
     justify-content: center;
     min-height: 100vh;
+    padding-top: 110px;
     background: var(--darkMain);
 }
 
@@ -149,11 +325,23 @@ body {
 }
 
 .wrapper {
-    width: 700px;
+    width: 100%;
+    max-width: 700px;
     padding: 35px;
     background: var(--lighterMain);
     border-radius: 50px;
     box-shadow: 0 0 10px var(--lighterMain2);
+}
+
+.wrapper form {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.text-field,
+.text-field-signup {
+    width: 100%;
+    box-sizing: border-box;
 }
 
 /* changes */
@@ -172,13 +360,9 @@ body {
 
 /* changes */
 .content-wrapper .typing-text {
-    overflow: hidden;
-    max-height: 256px;
+    /* Keep the input visible; only the paragraph scrolls */
+    overflow: visible;
     position: relative;
-}
-
-.typing-text::-webkit-scrollbar {
-    width: 0;
 }
 
 .typing-text p {
@@ -186,10 +370,22 @@ body {
     text-align: justify;
     letter-spacing: 1px;
     word-break: break-all;
+    white-space: pre-wrap;
+    max-height: 35vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    line-height: 1.4;
+    scrollbar-width: none; /* Firefox */
+}
+
+.typing-text p::-webkit-scrollbar {
+    width: 0;
+    height: 0;
 }
 
 .typing-text p span {
     position: relative;
+    display: inline-block; /* ensures cursor indicator aligns per character */
 }
 
 .typing-text p span.correct {
@@ -294,18 +490,52 @@ li:not(:first-child) span{
 }
 
 @media (max-width: 756px) {
+    body {
+        padding-top: 92px;
+    }
+    header {
+        padding: 14px 12px;
+        grid-template-columns: auto 1fr auto;
+    }
+
+    .contactButton {
+        display: none;
+    }
+
+    .hamburgerContact {
+        display: block;
+    }
+
     .wrapper {
-        padding: 20px 0;
+        padding: 20px 15px;
+    }
+
+    /* Put theme button beside hamburger on mobile */
+    .themeRandomizer {
+        position: static;
+        width: 44px;
+        height: 44px;
+        border-width: 3px;
+        justify-self: end;
+        margin-right: 8px;
+        margin-bottom: 0;
+        box-shadow: 0 0 10px var(--lighterMain2);
+    }
+
+    form .text-field {
+        margin: 20px 0;
+    }
+
+    form .text-field-signup {
+        margin: 20px 0;
     }
     .content-wrapper .content {
         padding: 20px 0;
     }
-    .content-wrapper .typing-text {
-        max-height: 100%;
-    }
     .typing-text p {
         font-size: 19px;
         text-align: left;
+        max-height: 28vh;
     }
     .content button {
         width: 100%;
@@ -332,6 +562,7 @@ li:not(:first-child) span{
     }
     .typing-text p {
         font-size: 13px;
+        max-height: 24vh;
     }
     .result-details li {
         margin-bottom: 10px;
@@ -339,11 +570,17 @@ li:not(:first-child) span{
     .content button {
         margin-top: 10px;
     }
+
+    .buttonLink button {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
 }
 
 /* userpage */
 .wrapperUser {
-    width: 700px;
+    width: 100%;
+    max-width: 700px;
     padding: 35px;
     background: var(--lighterMain);
     border-radius: 50px;
@@ -352,7 +589,7 @@ li:not(:first-child) span{
     align-items: center;
     justify-content: center;
     text-align: center;
-    margin: 30px;
+    margin: 30px auto;
 }
 
 .wrapperUser .contentWrapperUser {
@@ -453,28 +690,35 @@ li:not(:first-child) span{
 
 form .text-field {
     position: relative;
-    border-bottom: 2px solid --offwhite;
+    border-bottom: none;
     margin: 30px 0;
 }
 
 .text-field input {
     width: 100%;
-    padding: 0 8px;
-    height: 40px;
+    padding: 0 16px;
+    height: 44px;
     font-size: 16px;
     border: none;
     outline: none;
     border-radius: 20px;
+    background-color: var(--darkMain);
+    color: var(--darkText);
+    box-sizing: border-box;
 }
 
 .text-field label {
     position: absolute;
     top: 50%;
     left: 5px;
-    color: gray;
+    color: var(--darkText);
     font-size: 16px;
     transform: translate(10%, -50%);
     pointer-events: none;
+}
+
+.text-field input:focus {
+    box-shadow: 0 0 0 2px var(--highlight);
 }
 
 .forgot {
@@ -551,12 +795,15 @@ form .text-field-signup {
 
 .text-field-signup input {
     width: 100%;
-    padding: 0 8px;
-    height: 40px;
+    padding: 0 16px;
+    height: 44px;
     font-size: 16px;
     border: none;
     outline: none;
     border-radius: 20px;
+    background-color: var(--darkMain);
+    color: var(--darkText);
+    box-sizing: border-box;
 }
 
 .text-field-signup label {
@@ -568,6 +815,10 @@ form .text-field-signup {
     font-weight: 500;
     transform: translate(10%, -220%);
     pointer-events: none;
+}
+
+.text-field-signup input:focus {
+    box-shadow: 0 0 0 2px var(--highlight);
 }
 
 .terms-privacy-div {
@@ -586,6 +837,76 @@ form .text-field-signup {
 
 .signup-form {
     margin-top: 30px;
+}
+
+/* contact */
+.contactWrapper {
+    margin-top: 40px;
+}
+
+.contactForm {
+    width: 100%;
+}
+
+.contactField {
+    margin: 30px 0;
+}
+
+.contactForm input,
+.contactForm textarea {
+    width: 100%;
+    padding: 0 14px;
+    height: 44px;
+    border: none;
+    outline: none;
+    border-radius: 20px;
+    background: var(--darkMain);
+    color: var(--darkText);
+    font-size: 16px;
+}
+
+.contactForm textarea {
+    height: auto;
+    min-height: 140px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    resize: vertical;
+}
+
+.contactSuccess {
+    margin-top: 16px;
+    color: var(--highlight);
+    font-weight: 800;
+}
+
+.contactActions {
+    margin-top: 20px;
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.githubLink button {
+    /* reuse the theme button styling but allow it to size content */
+    width: auto;
+    min-width: 140px;
+}
+
+.contactBack {
+    color: var(--darkText);
+    font-weight: 800;
+}
+
+.contactBack a {
+    color: var(--darkText);
+    text-decoration: none;
+}
+
+.contactBack a:hover {
+    color: var(--highlight);
+    text-decoration: underline;
 }
 
 
